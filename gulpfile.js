@@ -32,11 +32,15 @@ gulp.task("minifyScripts", ["concatScripts"], function() {
 
 // 'gulp compileSass'
 gulp.task('compileSass', function() {
-   return gulp.src("scss/application.scss") // Gets the file to be compiled
+  return gulp.src("scss/application.scss") // Gets the file to be compiled
     .pipe(maps.init())              // Runs the maps.init method for sass
     .pipe(sass())                   // Compile source into css
     .pipe(maps.write('./'))         // Current directory, relevant to the gulp.dest() directory (css in this case)
     .pipe(gulp.dest('css'));        // Save compiled file into the css folder
+});
+
+gulp.task('watchSass', function() {
+  gulp.watch('scss/**/*.scss', ['compileSass']); // Look in the scss folder / all of its sub directories / any file with the .scss extension
 });
 
 //'gulp build'
