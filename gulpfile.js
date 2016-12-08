@@ -15,7 +15,9 @@ gulp.task("concatScripts", function() {
     'js.jquery.js',
     'js/sticky/jquery.sticky.js',
     'js/main'])
+  .pipe(maps.init())      // Runs the maps.init method for concat
   .pipe(concat("app.js")) // Concatenates the files in the array to a file called app.js
+  .pipe(maps.write('../maps')) // Current directory, relevant to the gulp.dest() directory (js in this case)
   .pipe(gulp.dest("js")); // Name of the folder the new app.js file will be saved to.
 });
 
@@ -30,9 +32,9 @@ gulp.task("minifyScripts", function() {
 // 'gulp compileSass'
 gulp.task('compileSass', function() {
   gulp.src("scss/application.scss") // Gets the file to be compiled
-    .pipe(maps.init())              // Pipe maps to the sass methd
+    .pipe(maps.init())              // Runs the maps.init method for sass
     .pipe(sass())                   // Compile source into css
-    .pipe(maps.write('./'))              // Current directory, relevant to the gulp.dest() directory (css in this case)
+    .pipe(maps.write('./'))         // Current directory, relevant to the gulp.dest() directory (css in this case)
     .pipe(gulp.dest('css'));        // Save compiled file into the css folder
 });
 
