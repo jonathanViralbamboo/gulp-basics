@@ -5,6 +5,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
+var maps = require('gulp-sourcemaps');
 
 // 'gulp concatScripts'
 gulp.task("concatScripts", function() {
@@ -29,7 +30,9 @@ gulp.task("minifyScripts", function() {
 // 'gulp compileSass'
 gulp.task('compileSass', function() {
   gulp.src("scss/application.scss") // Gets the file to be compiled
+    .pipe(maps.init())              // Pipe maps to the sass methd
     .pipe(sass())                   // Compile source into css
+    .pipe(maps.write('./'))              // Current directory, relevant to the gulp.dest() directory (css in this case)
     .pipe(gulp.dest('css'));        // Save compiled file into the css folder
 });
 
