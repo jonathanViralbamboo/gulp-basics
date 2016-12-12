@@ -40,8 +40,10 @@ gulp.task('compileSass', function() {
     .pipe(gulp.dest('css'));                // Save compiled file into the css folder
 });
 
-gulp.task('watchSass', function() {
-  gulp.watch('scss/**/*.scss', ['compileSass']); // Look in the scss folder / all of its sub directories / any file with the .scss extension
+// .watch() -> if a files is changed run a specfic task
+gulp.task('watchFiles', function() {
+  gulp.watch('scss/**/*.scss', ['compileSass']);  // Look in the scss folder / all of its sub directories / any file with the .scss extension
+  gulp.watch('js/main.js', ['concatScripts']);    // Look in the scss folder / all of its sub directories / any file with the .scss extension
 });
 
 // 'gulp clean'
@@ -56,6 +58,9 @@ gulp.task("build", ['minifyScripts', 'compileSass'], function() {
       "img/**", "fonts/**"], { base: './'}) // Base tells gulp to keep the directory structure for everything that's provided in the source
     .pipe(gulp.dest('dist'));               // Save project that's ready for distribution in the 'dist' file
 });
+
+// 'gulp serve'
+gulp.task('serve', ['watchFiles']);
 
 // 'gulp'
 gulp.task("default", ["clean"], function() {
